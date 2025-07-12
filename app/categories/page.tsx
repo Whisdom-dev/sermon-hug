@@ -3,152 +3,47 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Headphones, Video, TrendingUp, Clock } from "lucide-react"
 import Link from "next/link"
+import { useState } from "react"
 
 export default function CategoriesPage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   const categories = [
     {
       id: 1,
-      name: "Faith & Trust",
-      description: "Messages about building unwavering faith and trusting in God's promises",
-      icon: "🙏",
-      color: "from-blue-500 to-blue-600",
-      audioCount: 145,
-      videoCount: 89,
-      totalSermons: 234,
-      trending: true,
-      recentSermon: "The Power of Faith in Difficult Times",
+      name: "Faith",
+      description: "Messages on building and sustaining faith in Christ.",
+      icon: "📖"
     },
     {
       id: 2,
-      name: "Healing & Miracles",
-      description: "Powerful testimonies and teachings on divine healing and miraculous interventions",
-      icon: "✨",
-      color: "from-green-500 to-green-600",
-      audioCount: 98,
-      videoCount: 67,
-      totalSermons: 165,
-      trending: true,
-      recentSermon: "Divine Healing and Restoration",
+      name: "Healing",
+      description: "Teachings and testimonies on divine healing and restoration.",
+      icon: "🩺"
     },
     {
       id: 3,
-      name: "Purpose & Destiny",
-      description: "Discover God's unique plan and purpose for your life journey",
-      icon: "🎯",
-      color: "from-purple-500 to-purple-600",
-      audioCount: 87,
-      videoCount: 54,
-      totalSermons: 141,
-      trending: false,
-      recentSermon: "Walking in Purpose and Destiny",
+      name: "Purpose",
+      description: "Sermons about discovering and fulfilling God's purpose.",
+      icon: "🎯"
     },
     {
       id: 4,
-      name: "Grace & Mercy",
-      description: "Understanding God's unmerited favor and compassionate love",
-      icon: "💝",
-      color: "from-pink-500 to-pink-600",
-      audioCount: 76,
-      videoCount: 43,
-      totalSermons: 119,
-      trending: false,
-      recentSermon: "Grace and Mercy: God's Unending Love",
+      name: "Grace",
+      description: "Exploring the riches of God's grace and salvation.",
+      icon: "🕊️"
     },
     {
       id: 5,
-      name: "Spiritual Warfare",
-      description: "Equipping believers for victory in spiritual battles through Christ",
-      icon: "⚔️",
-      color: "from-red-500 to-red-600",
-      audioCount: 65,
-      videoCount: 38,
-      totalSermons: 103,
-      trending: true,
-      recentSermon: "Spiritual Warfare: Victory in Christ",
+      name: "Mission",
+      description: "Messages on evangelism, discipleship, and the Great Commission.",
+      icon: "🌍"
     },
     {
       id: 6,
-      name: "Marriage & Family",
-      description: "Biblical principles for strong marriages and godly family relationships",
-      icon: "👨‍👩‍👧‍👦",
-      color: "from-orange-500 to-orange-600",
-      audioCount: 54,
-      videoCount: 41,
-      totalSermons: 95,
-      trending: false,
-      recentSermon: "Marriage and Family God's Way",
-    },
-    {
-      id: 7,
-      name: "Prayer & Worship",
-      description: "Deepening your relationship with God through prayer and worship",
-      icon: "🎵",
-      color: "from-indigo-500 to-indigo-600",
-      audioCount: 89,
-      videoCount: 56,
-      totalSermons: 145,
-      trending: false,
-      recentSermon: "Breakthrough Prayer and Fasting",
-    },
-    {
-      id: 8,
-      name: "Youth & Young Adults",
-      description: "Inspiring messages specifically for the next generation of believers",
-      icon: "🌟",
-      color: "from-yellow-500 to-yellow-600",
-      audioCount: 43,
-      videoCount: 67,
-      totalSermons: 110,
-      trending: true,
-      recentSermon: "Youth Revival: Igniting the Next Generation",
-    },
-    {
-      id: 9,
-      name: "Leadership & Ministry",
-      description: "Developing godly leadership and effective ministry principles",
-      icon: "👑",
-      color: "from-teal-500 to-teal-600",
-      audioCount: 67,
-      videoCount: 34,
-      totalSermons: 101,
-      trending: false,
-      recentSermon: "Leadership in the Kingdom of God",
-    },
-    {
-      id: 10,
-      name: "Evangelism & Missions",
-      description: "Spreading the Gospel and reaching the lost for Christ",
-      icon: "🌍",
-      color: "from-cyan-500 to-cyan-600",
-      audioCount: 45,
-      videoCount: 29,
-      totalSermons: 74,
-      trending: false,
-      recentSermon: "The Great Commission: Go and Make Disciples",
-    },
-    {
-      id: 11,
-      name: "Financial Breakthrough",
-      description: "Biblical principles for financial stewardship and breakthrough",
-      icon: "💰",
-      color: "from-emerald-500 to-emerald-600",
-      audioCount: 38,
-      videoCount: 22,
-      totalSermons: 60,
-      trending: false,
-      recentSermon: "Financial Breakthrough and Stewardship",
-    },
-    {
-      id: 12,
-      name: "Prophetic Ministry",
-      description: "Understanding and operating in prophetic gifts and ministry",
-      icon: "🔮",
-      color: "from-violet-500 to-violet-600",
-      audioCount: 52,
-      videoCount: 31,
-      totalSermons: 83,
-      trending: false,
-      recentSermon: "Prophetic Worship and Intercession",
+      name: "Warfare",
+      description: "Equipping believers for spiritual warfare and victory.",
+      icon: "🛡️"
     },
   ]
 
@@ -170,6 +65,7 @@ export default function CategoriesPage() {
               </Link>
             </div>
 
+            {/* Desktop Nav */}
             <nav className="hidden md:flex space-x-8">
               <Link href="/" className="text-gray-600 hover:text-blue-600">
                 Home
@@ -188,38 +84,64 @@ export default function CategoriesPage() {
               </Link>
             </nav>
 
+            {/* Mobile Hamburger */}
+            <button
+              className="block md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onClick={() => setMobileMenuOpen((v) => !v)}
+              aria-label="Open menu"
+            >
+              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
             <div className="flex items-center space-x-4"></div>
           </div>
         </div>
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-b shadow-sm">
+            <nav className="flex flex-col px-4 py-2 space-y-2">
+              <Link href="/" className="text-blue-600 font-medium py-2" onClick={() => setMobileMenuOpen(false)}>
+                Home
+              </Link>
+              <Link href="/audio" className="text-gray-700 hover:text-blue-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                Audio
+              </Link>
+              <Link href="/video" className="text-gray-700 hover:text-blue-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                Video
+              </Link>
+              <Link href="/preachers" className="text-gray-700 hover:text-blue-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                Preachers
+              </Link>
+              <Link href="/categories" className="text-blue-600 font-medium py-2" onClick={() => setMobileMenuOpen(false)}>
+                Categories
+              </Link>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Page Header */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-4">Sermon Categories</h1>
-            <p className="text-xl text-indigo-100 max-w-2xl mx-auto">
-              Explore sermons organized by topics that matter most to your spiritual journey.
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-4">Sermon Categories</h1>
+            <p className="text-base md:text-xl text-indigo-100 max-w-full md:max-w-2xl mx-auto">
+              Explore a wide range of sermon topics to grow your faith and understanding.
             </p>
           </div>
         </div>
       </div>
 
       {/* Trending Categories */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-8 md:py-12 px-2 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Trending Categories</h2>
-              <p className="text-gray-600">Most popular sermon topics this week</p>
-            </div>
-            <Badge variant="secondary" className="flex items-center space-x-1">
-              <TrendingUp className="w-4 h-4" />
-              <span>Hot</span>
-            </Badge>
+          <div className="mb-6 md:mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Trending Categories</h2>
+            <p className="text-gray-600 text-sm md:text-base">Check out the most popular sermon categories right now.</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 md:gap-6">
             {trendingCategories.map((category) => (
               <Link key={category.id} href={`/category/${category.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}>
                 <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group border-0 shadow-md">
@@ -259,14 +181,13 @@ export default function CategoriesPage() {
       </section>
 
       {/* All Categories */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 md:py-12 px-2 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">All Categories</h2>
-            <p className="text-gray-600">Browse all available sermon categories</p>
+          <div className="mb-6 md:mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">All Categories</h2>
+            <p className="text-gray-600 text-sm md:text-base">Browse all available sermon categories</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-6">
             {categories.map((category) => (
               <Link key={category.id} href={`/category/${category.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}>
                 <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group">
@@ -324,14 +245,13 @@ export default function CategoriesPage() {
         </div>
       </section>
 
-      {/* Popular Categories */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 bg-white">
+      {/* Most Popular */}
+      <section className="py-8 md:py-12 px-2 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Most Popular</h2>
-            <p className="text-gray-600">Categories with the most sermon content</p>
+          <div className="mb-6 md:mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Most Popular</h2>
+            <p className="text-gray-600 text-sm md:text-base">Categories with the most sermon content</p>
           </div>
-
           <div className="space-y-4">
             {popularCategories.map((category, index) => (
               <Link key={category.id} href={`/category/${category.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}>

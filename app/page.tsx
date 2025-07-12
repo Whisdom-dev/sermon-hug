@@ -7,8 +7,11 @@ import { Badge } from "@/components/ui/badge"
 import { Search, Download, Play, Clock, Calendar, User, Headphones, Video } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { useState } from "react"
 
 export default function HomePage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   const featuredContent = [
     {
       id: 1,
@@ -47,34 +50,44 @@ export default function HomePage() {
 
   const recentSermons = [
     {
+      id: 1,
+      title: "Winning through His Resurrection Power",
+      preacher: "Pastor W.F. Kumuyi",
+      date: "2025-04-21",
+      category: "Faith",
+      description: "A powerful message on the victory believers have through Christ's resurrection.",
+      image: "https://dclm.org/wp-content/uploads/2021/06/pastor-wf-kumuyi.jpg",
+      link: "https://dclm.org/sermons/retreats/"
+    },
+    {
+      id: 2,
+      title: "Risen with Christ",
+      preacher: "Pastor W.F. Kumuyi",
+      date: "2025-04-20",
+      category: "Faith",
+      description: "Exploring the significance of Christ's resurrection for every believer.",
+      image: "https://dclm.org/wp-content/uploads/2021/06/pastor-wf-kumuyi.jpg",
+      link: "https://dclm.org/sermons/retreats/"
+    },
+    {
+      id: 3,
+      title: "Wellness in His Resurrection Power",
+      preacher: "Pastor W.F. Kumuyi",
+      date: "2025-04-19",
+      category: "Healing",
+      description: "A teaching on healing and wellness through the resurrection power of Christ.",
+      image: "https://dclm.org/wp-content/uploads/2021/06/pastor-wf-kumuyi.jpg",
+      link: "https://dclm.org/sermons/retreats/"
+    },
+    {
       id: 4,
-      title: "Grace and Mercy",
-      preacher: "Pastor David Wilson",
-      duration: "42:20",
-      date: "2024-01-08",
-      type: "audio",
-      category: "Grace",
-      downloads: 567,
-    },
-    {
-      id: 5,
-      title: "The Great Commission",
-      preacher: "Rev. Mary Davis",
-      duration: "35:10",
-      date: "2024-01-05",
-      type: "video",
-      category: "Mission",
-      downloads: 423,
-    },
-    {
-      id: 6,
-      title: "Spiritual Warfare",
-      preacher: "Pastor James Miller",
-      duration: "48:30",
-      date: "2024-01-03",
-      type: "audio",
-      category: "Warfare",
-      downloads: 789,
+      title: "Preserving Merciful, Peaceful Love while Earnestly Contending for the Faith",
+      preacher: "Pastor W.F. Kumuyi",
+      date: "2025-06-30",
+      category: "Faith",
+      description: "A Bible study on standing firm in faith and love in challenging times.",
+      image: "https://dclm.org/wp-content/uploads/2021/06/pastor-wf-kumuyi.jpg",
+      link: "https://dclm.org/sermons/retreats/"
     },
   ]
 
@@ -102,6 +115,7 @@ export default function HomePage() {
               </div>
             </div>
 
+            {/* Desktop Nav */}
             <nav className="hidden md:flex space-x-8">
               <Link href="/" className="text-blue-600 font-medium">
                 Home
@@ -120,9 +134,42 @@ export default function HomePage() {
               </Link>
             </nav>
 
+            {/* Mobile Hamburger */}
+            <button
+              className="block md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onClick={() => setMobileMenuOpen((v) => !v)}
+              aria-label="Open menu"
+            >
+              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
             <div className="flex items-center space-x-4"></div>
           </div>
         </div>
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-b shadow-sm">
+            <nav className="flex flex-col px-4 py-2 space-y-2">
+              <Link href="/" className="text-blue-600 font-medium py-2" onClick={() => setMobileMenuOpen(false)}>
+                Home
+              </Link>
+              <Link href="/audio" className="text-gray-700 hover:text-blue-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                Audio
+              </Link>
+              <Link href="/video" className="text-gray-700 hover:text-blue-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                Video
+              </Link>
+              <Link href="/preachers" className="text-gray-700 hover:text-blue-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                Preachers
+              </Link>
+              <Link href="/categories" className="text-gray-700 hover:text-blue-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                Categories
+              </Link>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
@@ -278,20 +325,19 @@ export default function HomePage() {
       {/* Recent Sermons */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-12">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8 md:mb-12 gap-4 md:gap-0">
             <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Recent Sermons</h2>
-              <p className="text-gray-600">Stay updated with the latest messages from our featured preachers.</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 md:mb-4">Recent Sermons</h2>
+              <p className="text-gray-600 text-sm md:text-base">Stay updated with the latest messages from our featured preachers.</p>
             </div>
-            <Button variant="outline">View All</Button>
+            <Button variant="outline" className="w-full md:w-auto">View All</Button>
           </div>
-
           <div className="space-y-4">
             {recentSermons.map((sermon) => (
               <Card key={sermon.id} className="hover:shadow-md transition-shadow duration-300">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
+                <CardContent className="p-4 md:p-6">
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-0">
+                    <div className="flex flex-row md:flex-row items-center gap-4 flex-1">
                       <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
                         {sermon.type === "audio" ? (
                           <Headphones className="w-6 h-6 text-white" />
@@ -300,25 +346,25 @@ export default function HomePage() {
                         )}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900 hover:text-blue-600 cursor-pointer">
+                        <h3 className="font-semibold text-gray-900 hover:text-blue-600 cursor-pointer text-base md:text-lg">
                           {sermon.title}
                         </h3>
-                        <p className="text-sm text-gray-500">{sermon.preacher}</p>
+                        <p className="text-xs md:text-sm text-gray-500">{sermon.preacher}</p>
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          <Badge variant="outline">{sermon.category}</Badge>
+                          <span className="text-xs md:text-sm text-gray-500">{sermon.duration}</span>
+                          <span className="text-xs md:text-sm text-gray-500">{sermon.downloads} downloads</span>
+                        </div>
                       </div>
                     </div>
-
-                    <div className="flex items-center space-x-6">
-                      <Badge variant="outline">{sermon.category}</Badge>
-                      <span className="text-sm text-gray-500">{sermon.duration}</span>
-                      <span className="text-sm text-gray-500">{sermon.downloads} downloads</span>
-                      <div className="flex space-x-2">
-                        <Button size="sm" variant="outline">
-                          <Play className="w-4 h-4" />
-                        </Button>
-                        <Button size="sm">
-                          <Download className="w-4 h-4" />
-                        </Button>
-                      </div>
+                    {/* Action Buttons: stack below on mobile, right on desktop */}
+                    <div className="flex flex-row md:flex-col gap-2 md:gap-2 w-full md:w-auto justify-end mt-2 md:mt-0">
+                      <Button size="sm" variant="outline" className="w-1/2 md:w-auto">
+                        <Play className="w-4 h-4" />
+                      </Button>
+                      <Button size="sm" className="w-1/2 md:w-auto">
+                        <Download className="w-4 h-4" />
+                      </Button>
                     </div>
                   </div>
                 </CardContent>

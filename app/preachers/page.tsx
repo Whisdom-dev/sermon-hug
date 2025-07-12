@@ -1,103 +1,48 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, Users, Calendar, Headphones, Video } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 export default function PreachersPage() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const router = useRouter()
+
   const preachers = [
     {
       id: 1,
-      name: "Pastor John Smith",
-      title: "Senior Pastor",
-      church: "Grace Community Church",
-      location: "Lagos, Nigeria",
-      bio: "Pastor John has been in ministry for over 20 years, touching lives across Africa with his powerful messages of faith and hope.",
-      followers: 45000,
-      sermons: 156,
-      audioCount: 98,
-      videoCount: 58,
-      joinDate: "2018",
-      avatar: "/placeholder.svg?height=150&width=150",
-      specialties: ["Faith", "Healing", "Leadership"],
+      name: "Pastor W.F. Kumuyi",
+      image: "/preachers/kumuyi.jpg",
+      bio: "Founder and General Superintendent of Deeper Christian Life Ministry, renowned for his expository Bible teaching and global evangelism.",
     },
     {
       id: 2,
-      name: "Rev. Sarah Johnson",
-      title: "Evangelist",
-      church: "New Life Ministry",
-      location: "Abuja, Nigeria",
-      bio: "Rev. Sarah is known for her inspiring messages on purpose and destiny, helping thousands discover their calling in God.",
-      followers: 32000,
-      sermons: 89,
-      audioCount: 45,
-      videoCount: 44,
-      joinDate: "2019",
-      avatar: "/placeholder.svg?height=150&width=150",
-      specialties: ["Purpose", "Destiny", "Women's Ministry"],
+      name: "Bro Gbile Akanni",
+      image: "/preachers/gbileakanni.jpg",
+      bio: "A respected teacher and discipler, known for his deep teachings on Christian living and revival, Convener of Peace House, Gboko.",
     },
     {
       id: 3,
-      name: "Bishop Michael Brown",
-      title: "Bishop",
-      church: "Restoration Cathedral",
-      location: "Port Harcourt, Nigeria",
-      bio: "Bishop Michael's ministry focuses on divine healing and restoration, with countless testimonies of miraculous healings.",
-      followers: 67000,
-      sermons: 234,
-      audioCount: 145,
-      videoCount: 89,
-      joinDate: "2017",
-      avatar: "/placeholder.svg?height=150&width=150",
-      specialties: ["Healing", "Miracles", "Restoration"],
+      name: "Apostle Gideon Odoma",
+      image: "/preachers/gideonodoma.jpg",
+      bio: "Apostolic leader and teacher, passionate about equipping believers for spiritual warfare and kingdom advancement.",
     },
     {
       id: 4,
-      name: "Pastor David Wilson",
-      title: "Lead Pastor",
-      church: "Victory Chapel",
-      location: "Kano, Nigeria",
-      bio: "Pastor David's teachings on grace and mercy have transformed countless lives, bringing hope to the hopeless.",
-      followers: 28000,
-      sermons: 67,
-      audioCount: 42,
-      videoCount: 25,
-      joinDate: "2020",
-      avatar: "/placeholder.svg?height=150&width=150",
-      specialties: ["Grace", "Mercy", "Forgiveness"],
-    },
-    {
-      id: 5,
-      name: "Pastor James Miller",
-      title: "Senior Pastor",
-      church: "Warrior's Assembly",
-      location: "Ibadan, Nigeria",
-      bio: "Known for his powerful teachings on spiritual warfare, Pastor James equips believers for victory in Christ.",
-      followers: 39000,
-      sermons: 112,
-      audioCount: 78,
-      videoCount: 34,
-      joinDate: "2019",
-      avatar: "/placeholder.svg?height=150&width=150",
-      specialties: ["Spiritual Warfare", "Victory", "Deliverance"],
-    },
-    {
-      id: 6,
-      name: "Rev. Mary Davis",
-      title: "Missionary",
-      church: "Global Harvest Mission",
-      location: "Kaduna, Nigeria",
-      bio: "Rev. Mary's heart for missions has led her to plant churches across West Africa, spreading the Gospel to unreached areas.",
-      followers: 21000,
-      sermons: 78,
-      audioCount: 56,
-      videoCount: 22,
-      joinDate: "2021",
-      avatar: "/placeholder.svg?height=150&width=150",
-      specialties: ["Missions", "Church Planting", "Evangelism"],
+      name: "Evangelist Isaac Omolehin",
+      image: "/preachers/omolehin.jpg",
+      bio: "Evangelist and founder of Word Assembly Ministries, focused on soul-winning and revival across Africa.",
     },
   ]
+
+  function slugify(name) {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -114,6 +59,7 @@ export default function PreachersPage() {
               </Link>
             </div>
 
+            {/* Desktop Nav */}
             <nav className="hidden md:flex space-x-8">
               <Link href="/" className="text-gray-600 hover:text-blue-600">
                 Home
@@ -132,17 +78,50 @@ export default function PreachersPage() {
               </Link>
             </nav>
 
+            {/* Mobile Hamburger */}
+            <button
+              className="block md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onClick={() => setMobileMenuOpen((v) => !v)}
+              aria-label="Open menu"
+            >
+              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
             <div className="flex items-center space-x-4"></div>
           </div>
         </div>
+        {/* Mobile Menu Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-b shadow-sm">
+            <nav className="flex flex-col px-4 py-2 space-y-2">
+              <Link href="/" className="text-blue-600 font-medium py-2" onClick={() => setMobileMenuOpen(false)}>
+                Home
+              </Link>
+              <Link href="/audio" className="text-gray-700 hover:text-blue-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                Audio
+              </Link>
+              <Link href="/video" className="text-gray-700 hover:text-blue-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                Video
+              </Link>
+              <Link href="/preachers" className="text-blue-600 font-medium py-2" onClick={() => setMobileMenuOpen(false)}>
+                Preachers
+              </Link>
+              <Link href="/categories" className="text-gray-700 hover:text-blue-600 py-2" onClick={() => setMobileMenuOpen(false)}>
+                Categories
+              </Link>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Page Header */}
-      <div className="bg-gradient-to-r from-green-600 to-teal-600 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="bg-gradient-to-r from-green-600 to-teal-600 py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-white mb-4">Featured Preachers</h1>
-            <p className="text-xl text-green-100 max-w-2xl mx-auto">
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2 md:mb-4">Featured Preachers</h1>
+            <p className="text-base md:text-xl text-green-100 max-w-full md:max-w-2xl mx-auto">
               Meet the anointed men and women of God who are sharing powerful messages that transform lives.
             </p>
           </div>
@@ -150,14 +129,14 @@ export default function PreachersPage() {
       </div>
 
       {/* Preachers Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
           {preachers.map((preacher) => (
             <Card key={preacher.id} className="hover:shadow-xl transition-all duration-300 group">
               <CardHeader className="text-center pb-4">
                 <div className="relative mx-auto mb-4">
                   <Image
-                    src={preacher.avatar || "/placeholder.svg"}
+                    src={preacher.image || "/placeholder.svg"}
                     alt={preacher.name}
                     width={150}
                     height={150}
@@ -185,7 +164,7 @@ export default function PreachersPage() {
 
                 {/* Specialties */}
                 <div className="flex flex-wrap gap-2 justify-center">
-                  {preacher.specialties.map((specialty) => (
+                  {(preacher.specialties || []).map((specialty) => (
                     <Badge key={specialty} variant="outline" className="text-xs">
                       {specialty}
                     </Badge>
@@ -199,7 +178,7 @@ export default function PreachersPage() {
                     <div className="text-xs text-gray-500">Total Sermons</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">{preacher.followers.toLocaleString()}</div>
+                    <div className="text-2xl font-bold text-blue-600">{(preacher.followers ?? 0).toLocaleString()}</div>
                     <div className="text-xs text-gray-500">Followers</div>
                   </div>
                 </div>
@@ -208,7 +187,7 @@ export default function PreachersPage() {
                 <div className="flex justify-between text-sm text-gray-600">
                   <span className="flex items-center space-x-1">
                     <Headphones className="w-4 h-4" />
-                    <span>{preacher.audioCount} Audio</span>
+                    <span>{(preacher.downloads ?? 0).toLocaleString()}</span>
                   </span>
                   <span className="flex items-center space-x-1">
                     <Video className="w-4 h-4" />
@@ -226,7 +205,7 @@ export default function PreachersPage() {
                     <Users className="w-4 h-4 mr-1" />
                     Follow
                   </Button>
-                  <Button variant="outline" className="flex-1 bg-transparent" size="sm">
+                  <Button variant="outline" className="flex-1 bg-transparent" size="sm" onClick={() => router.push(`/preachers/${slugify(preacher.name)}/sermons`)}>
                     View Sermons
                   </Button>
                 </div>
