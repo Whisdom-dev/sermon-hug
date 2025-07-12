@@ -7,7 +7,11 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    unoptimized: false,
+    domains: [
+      'dclm.org',
+      'pbs.twimg.com',
+    ],
   },
 }
 

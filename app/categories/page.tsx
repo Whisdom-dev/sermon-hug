@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -46,9 +48,6 @@ export default function CategoriesPage() {
       icon: "🛡️"
     },
   ]
-
-  const trendingCategories = categories.filter((cat) => cat.trending)
-  const popularCategories = categories.sort((a, b) => b.totalSermons - a.totalSermons).slice(0, 6)
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -142,10 +141,10 @@ export default function CategoriesPage() {
             <p className="text-gray-600 text-sm md:text-base">Check out the most popular sermon categories right now.</p>
           </div>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 md:gap-6">
-            {trendingCategories.map((category) => (
-              <Link key={category.id} href={`/category/${category.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}>
+            {categories.map((category) => (
+              <Link key={category.id} href={`/categories/${category.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}>
                 <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group border-0 shadow-md">
-                  <div className={`h-2 bg-gradient-to-r ${category.color} rounded-t-lg`}></div>
+                  <div className={`h-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-t-lg`}></div>
                   <CardHeader className="text-center pb-4">
                     <div className="text-4xl mb-2 group-hover:scale-110 transition-transform duration-300">
                       {category.icon}
@@ -160,15 +159,15 @@ export default function CategoriesPage() {
                       <div className="flex justify-between text-sm">
                         <span className="flex items-center space-x-1">
                           <Headphones className="w-4 h-4" />
-                          <span>{category.audioCount}</span>
+                          <span>0</span>
                         </span>
                         <span className="flex items-center space-x-1">
                           <Video className="w-4 h-4" />
-                          <span>{category.videoCount}</span>
+                          <span>0</span>
                         </span>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-indigo-600">{category.totalSermons}</div>
+                        <div className="text-2xl font-bold text-indigo-600">0</div>
                         <div className="text-xs text-gray-500">Total Sermons</div>
                       </div>
                     </div>
@@ -189,13 +188,13 @@ export default function CategoriesPage() {
           </div>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 md:gap-6">
             {categories.map((category) => (
-              <Link key={category.id} href={`/category/${category.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}>
+              <Link key={category.id} href={`/categories/${category.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}>
                 <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group">
                   <CardHeader className="pb-4">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3">
                         <div
-                          className={`w-12 h-12 bg-gradient-to-r ${category.color} rounded-lg flex items-center justify-center text-white text-xl group-hover:scale-110 transition-transform duration-300`}
+                          className={`w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center text-white text-xl group-hover:scale-110 transition-transform duration-300`}
                         >
                           {category.icon}
                         </div>
@@ -204,13 +203,7 @@ export default function CategoriesPage() {
                             {category.name}
                           </CardTitle>
                           <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
-                            <span>{category.totalSermons} sermons</span>
-                            {category.trending && (
-                              <Badge variant="secondary" className="text-xs">
-                                <TrendingUp className="w-3 h-3 mr-1" />
-                                Trending
-                              </Badge>
-                            )}
+                            <span>0 sermons</span>
                           </div>
                         </div>
                       </div>
@@ -223,18 +216,18 @@ export default function CategoriesPage() {
                     <div className="flex justify-between items-center text-sm text-gray-600 mb-4">
                       <span className="flex items-center space-x-1">
                         <Headphones className="w-4 h-4" />
-                        <span>{category.audioCount} Audio</span>
+                        <span>0 Audio</span>
                       </span>
                       <span className="flex items-center space-x-1">
                         <Video className="w-4 h-4" />
-                        <span>{category.videoCount} Video</span>
+                        <span>0 Video</span>
                       </span>
                     </div>
 
                     <div className="border-t pt-3">
                       <div className="flex items-center space-x-2 text-sm text-gray-500">
                         <Clock className="w-4 h-4" />
-                        <span className="line-clamp-1">Latest: {category.recentSermon}</span>
+                        <span className="line-clamp-1">Latest: N/A</span>
                       </div>
                     </div>
                   </CardContent>
@@ -253,8 +246,8 @@ export default function CategoriesPage() {
             <p className="text-gray-600 text-sm md:text-base">Categories with the most sermon content</p>
           </div>
           <div className="space-y-4">
-            {popularCategories.map((category, index) => (
-              <Link key={category.id} href={`/category/${category.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}>
+            {categories.map((category, index) => (
+              <Link key={category.id} href={`/categories/${category.name.toLowerCase().replace(/[^a-z0-9]/g, "-")}`}>
                 <Card className="hover:shadow-md transition-shadow duration-300 cursor-pointer">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between">
@@ -263,7 +256,7 @@ export default function CategoriesPage() {
                           {index + 1}
                         </div>
                         <div
-                          className={`w-10 h-10 bg-gradient-to-r ${category.color} rounded-lg flex items-center justify-center text-white text-lg`}
+                          className={`w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center text-white text-lg`}
                         >
                           {category.icon}
                         </div>
@@ -277,25 +270,19 @@ export default function CategoriesPage() {
 
                       <div className="flex items-center space-x-6">
                         <div className="text-center">
-                          <div className="text-lg font-bold text-indigo-600">{category.totalSermons}</div>
+                          <div className="text-lg font-bold text-indigo-600">0</div>
                           <div className="text-xs text-gray-500">Sermons</div>
                         </div>
                         <div className="flex items-center space-x-4 text-sm text-gray-500">
                           <span className="flex items-center space-x-1">
                             <Headphones className="w-4 h-4" />
-                            <span>{category.audioCount}</span>
+                            <span>0</span>
                           </span>
                           <span className="flex items-center space-x-1">
                             <Video className="w-4 h-4" />
-                            <span>{category.videoCount}</span>
+                            <span>0</span>
                           </span>
                         </div>
-                        {category.trending && (
-                          <Badge variant="secondary">
-                            <TrendingUp className="w-3 h-3 mr-1" />
-                            Trending
-                          </Badge>
-                        )}
                       </div>
                     </div>
                   </CardContent>
